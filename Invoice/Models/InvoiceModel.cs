@@ -12,7 +12,7 @@ namespace InvoiceSystem.Models
         [Required]
         public string CustomerName { get; set; }
 
-        [Precision(18, 2)] // ✅ Correct precision for SQL Server
+        [Precision(18, 2)] // ✅ Correct precision for SQL 
         [Range(0, double.MaxValue)]
         public decimal Amount { get; set; }
 
