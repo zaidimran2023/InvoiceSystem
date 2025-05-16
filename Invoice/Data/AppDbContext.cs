@@ -10,6 +10,11 @@ namespace InvoiceSystem.Data
         {
         }
 
-        public DbSet<InvoiceModel> Invoices { get; set; } 
+        public DbSet<InvoiceModel> Invoices { get; set; }
+
+        internal async Task SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

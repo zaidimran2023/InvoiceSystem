@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using InvoiceSystem.Data; // Your DbContext namespace
-using InvoiceSystem.Models; // Your InvoiceModel namespace
-using System.Threading.Tasks;
-using System.Linq;
+using InvoiceSystem.Models;
+using System.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore; // Your InvoiceModel namespace
 
 namespace InvoiceSystem.Controllers
 {
@@ -53,7 +52,7 @@ namespace InvoiceSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(invoice);
+                _context.Invoices.Add(invoice);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +92,7 @@ namespace InvoiceSystem.Controllers
                     _context.Update(invoice);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException)
                 {
                     if (!InvoiceExists(invoice.Id))
                     {
