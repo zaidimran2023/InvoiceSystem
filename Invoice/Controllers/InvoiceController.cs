@@ -78,35 +78,13 @@ namespace InvoiceSystem.Controllers
         // POST: Invoices/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,Amount,InvoiceDate,DueDate,Description,Status")] InvoiceModel invoice)
+        public async Task<IActionResult> Edit(InvoiceModel invoice)
         {
-            if (id != invoice.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(invoice);
-                    await _context.SaveChangesAsync();
-                }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException)
-                {
-                    if (!InvoiceExists(invoice.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+            _context.Invoices.Update(invoice);
+            await _context.SaveChangesAsync();
             return View(invoice);
         }
+
 
         // GET: Invoices/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -141,5 +119,8 @@ namespace InvoiceSystem.Controllers
         {
             return _context.Invoices.Any(e => e.Id == id);
         }
+
+  
+
     }
 }
